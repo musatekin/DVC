@@ -1,0 +1,19 @@
+stages:
+  prepare:
+    cmd: python src/data/make_dataset.py
+    deps:
+      - src/data/make_dataset.py
+    outs:
+      - data/raw/iris.csv
+      - data/processed/iris_processed.csv
+
+  train:
+    cmd: python src/models/train.py
+    deps:
+      - src/models/train.py
+      - data/processed/iris_processed.csv
+    outs:
+      - models/iris_model.joblib
+    metrics:
+      - metrics/metrics.yaml:
+          cache: false 
